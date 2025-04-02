@@ -4,25 +4,28 @@
     name: nfs-utils
     state: present
 
-- name: Unmount NFS share if mounted
+- name: Unmount NFS shares
   mount:
-    path: /mnt/media
-    src: 192.168.0.7:/mnt/tank/media
+    path: "{{ item.mount_point }}"
+    src: "{{ nfs_server }}:{{ item.path }}"
     fstype: nfs
     state: unmounted
+  with_items: "{{ nfs_shares }}"
 
-- name: Create media directory mount point
+- name: Create NFS share mount points
   file:
-    path: /mnt/media
+    path: "{{ item.mount_point }}"
     owner: root
     group: root
     mode: '0755'
     state: directory
+  with_items: "{{ nfs_shares }}"
 
-- name: Mount NFS share
+- name: Mount NFS shares
   mount:
-    path: /mnt/media
-    src: 192.168.0.7:/mnt/tank/media
+    path: "{{ item.mount_point }}"
+    src: "{{ nfs_server }}:{{ item.path }}"
     fstype: nfs
     opts: defaults
     state: mounted
+  with_items: "{{ nfs_shares }}"
