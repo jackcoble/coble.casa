@@ -1,0 +1,3 @@
+plex_dir: /opt/plex
+plex_data_dir: "{{ plex_dir }}/data"
+plex_media_dir: /mnt/media
