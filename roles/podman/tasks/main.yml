@@ -1,3 +1,4 @@
+---
 - name: Update all packages to the latest version
   ansible.builtin.dnf:
     name: "*"
@@ -13,6 +14,11 @@
 - name: Install Podman
   ansible.builtin.dnf:
     name: podman
+    state: present
+
+- name: Install Podman Docker (Compatible) CLI
+  ansible.builtin.dnf:
+    name: podman-docker
     state: present
 
 - name: Install Podman Compose
