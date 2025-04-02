@@ -22,3 +22,15 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Start Plex container
+  community.docker.docker_compose_v2:
+    project_src: "{{ plex_dir }}"
+  register: output
+
+- name: Open Firewall for Plex
+  ansible.posix.firewalld:
+    port: 32400/tcp
+    permanent: true
+    state: enabled
+    immediate: yes
