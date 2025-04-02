@@ -1,0 +1,6 @@
+---
+- name: Setup home server
+  hosts: all
+  become: true
+  roles:
+    - podman
