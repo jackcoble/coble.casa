@@ -1,0 +1,28 @@
+---
+- name: Ensure NFS utils are installed
+  dnf:
+    name: nfs-utils
+    state: present
+
+- name: Unmount NFS share if mounted
+  mount:
+    path: /mnt/media
+    src: 192.168.0.7:/mnt/tank/media
+    fstype: nfs
+    state: unmounted
+
+- name: Create media directory mount point
+  file:
+    path: /mnt/media
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+
+- name: Mount NFS share
+  mount:
+    path: /mnt/media
+    src: 192.168.0.7:/mnt/tank/media
+    fstype: nfs
+    opts: defaults
+    state: mounted
