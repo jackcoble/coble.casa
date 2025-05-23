@@ -3,14 +3,15 @@
   apt:
     name: nfs-common
     state: present
+    update_cache: true
 
-- name: Unmount NFS shares
+- name: Unmount NFS shares (if mounted)
   mount:
     path: "{{ item.mount_point }}"
     src: "{{ nfs_server }}:{{ item.path }}"
     fstype: nfs
     state: unmounted
-  with_items: "{{ nfs_shares }}"
+  loop: "{{ nfs_shares }}"
 
 - name: Create NFS share mount points
   file:
@@ -19,13 +20,13 @@
     group: root
     mode: '0755'
     state: directory
-  with_items: "{{ nfs_shares }}"
+  loop: "{{ nfs_shares }}"
 
-- name: Mount NFS shares
+- name: Mount NFS shares with systemd automount and netdev
   mount:
     path: "{{ item.mount_point }}"
     src: "{{ nfs_server }}:{{ item.path }}"
     fstype: nfs
-    opts: defaults
+    opts: "defaults,_netdev,x-systemd.automount"
     state: mounted
-  with_items: "{{ nfs_shares }}"
+  loop: "{{ nfs_shares }}"
