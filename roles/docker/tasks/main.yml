@@ -42,7 +42,6 @@
     state: started
     enabled: true
 
-
 - name: Add users to the docker group
   ansible.builtin.user:
     name: "{{ item }}"
