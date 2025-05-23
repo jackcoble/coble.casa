@@ -1,0 +1,21 @@
+---
+# configuration for sops.
+# each machine host key is converted to an age key via ssh-to-age.
+#
+# i also maintain a user key which resides outside of my machines in a secure location.
+# (just in case i lose access to my machines).
+#
+# sops will go ahead and encrypt secrets with all of the specified keys.
+
+keys:
+  - users:
+      - &jack age1xkn8hwvzs8drdfz96ypv3pe5cudj5l00pz96z7e8ygpakt6h8cesp969f9
+  - hosts:
+      - &mba01 age1e3u8t4994pws0wpw08h3363ncyydhkcxx3ulcggvnmrf4sddn9eqjzvydt
+
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *jack
+          - *mba01
