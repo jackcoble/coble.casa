@@ -1,11 +1,13 @@
 ---
-docker_repo_url: https://download.docker.com/linux/rhel/docker-ce.repo
+docker_arch: "amd64"
+docker_keyring_dir: "/etc/apt/keyrings"
+docker_key_path: "/etc/apt/keyrings/docker.asc"
+docker_repo_codename: "{{ ansible_lsb.codename }}"
+docker_repo_entry: "deb [arch={{ docker_arch }} signed-by={{ docker_key_path }}] https://download.docker.com/linux/debian {{ docker_repo_codename }} stable"
 docker_service_name: docker
+docker_data_dir: /opt/docker
+docker_users: [jack]
 docker_packages:
   - docker-ce
   - docker-ce-cli
   - containerd.io
-  - docker-buildx-plugin
-  - docker-compose-plugin
-
-docker_users: [jack]

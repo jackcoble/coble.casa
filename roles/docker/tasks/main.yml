@@ -1,24 +1,47 @@
 ---
-- name: Install dnf-plugins-core
-  ansible.builtin.dnf:
-    name: dnf-plugins-core
+- name: Ensure required packages are installed
+  apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state: present
+    update_cache: true
+
+- name: Ensure Docker keyring directory exists
+  file:
+    path: "{{ docker_keyring_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Download Docker GPG key
+  get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: "{{ docker_key_path }}"
+    mode: '0644'
+
+- name: Add Docker apt repository
+  apt_repository:
+    repo: "{{ docker_repo_entry }}"
+    filename: docker
     state: present
 
-- name: Add Docker repository
-  ansible.builtin.command:
-    cmd: "dnf config-manager --add-repo {{ docker_repo_url }}"
-    creates: /etc/yum.repos.d/docker-ce.repo
+- name: Update apt cache
+  apt:
+    update_cache: true
 
 - name: Install Docker packages
-  ansible.builtin.dnf:
+  apt:
     name: "{{ docker_packages }}"
     state: present
 
-- name: Ensure Docker service is enabled and started
-  ansible.builtin.service:
-    name: "{{ docker_service_name }}"
+- name: Ensure Docker service is started and enabled
+  service:
+    name: docker
     state: started
     enabled: true
+
 
 - name: Add users to the docker group
   ansible.builtin.user:
@@ -27,3 +50,11 @@
     append: true
   loop: "{{ docker_users }}"
   when: docker_users | length > 0
+
+- name: Create Docker data directory
+  ansible.builtin.file:
+    path: "{{ docker_data_dir }}"
+    state: directory
+    owner: root
+    group: docker
+    mode: '0755'
