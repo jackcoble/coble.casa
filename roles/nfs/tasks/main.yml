@@ -1,7 +1,7 @@
 ---
-- name: Ensure NFS utils are installed
-  dnf:
-    name: nfs-utils
+- name: Ensure NFS common packages are installed
+  apt:
+    name: nfs-common
     state: present
 
 - name: Unmount NFS shares

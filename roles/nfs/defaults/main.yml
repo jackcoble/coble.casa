@@ -1,6 +1,6 @@
 ---
 nfs_server: 192.168.0.7
 nfs_shares:
-  # Media share for Plex
-  - path: /mnt/tank/media
-    mount_point: /mnt/media
+  # Photos share for Immich
+  - path: /mnt/tank/photos/Library
+    mount_point: /mnt/photos
