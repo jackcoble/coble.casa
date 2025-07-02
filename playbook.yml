@@ -2,6 +2,16 @@
 - name: Setup home server
   hosts: all
   become: true
+  pre_tasks:
+    - name: Load secrets with sops
+      community.sops.load_vars:
+        file: secrets/secrets.yaml
+        name: secrets
   roles:
     - docker
     - nfs
+  tasks:
+    - name: Example use of loaded secret
+      debug:
+        msg: "Tailscale key loaded"
+      no_log: true
