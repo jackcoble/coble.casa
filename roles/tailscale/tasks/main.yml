@@ -1,0 +1,31 @@
+---
+- name: Ensure tailscale compose directory exists
+  ansible.builtin.file:
+    path: "{{ tailscale_compose_dir }}"
+    state: directory
+    owner: root
+    group: docker
+    mode: '0755'
+
+- name: Write tailscale env file
+  ansible.builtin.copy:
+    dest: "{{ tailscale_compose_dir }}/.env"
+    content: |
+      TAILSCALE_AUTHKEY={{ tailscale_auth_key }}
+    owner: root
+    group: docker
+    mode: '0600'
+
+- name: Deploy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ tailscale_compose_dir }}/docker-compose.yml"
+    owner: root
+    group: docker
+    mode: '0644'
+
+- name: Start tailscale container with docker compose
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ tailscale_compose_dir }}"
+  when: tailscale_start_compose

@@ -1,0 +1,7 @@
+---
+tailscale_image: "tailscale/tailscale:latest"
+tailscale_container_name: "tailscale"
+tailscale_compose_dir: "/opt/docker/tailscale"
+tailscale_volume_name: "tailscale-data"
+tailscale_auth_key: ""
+tailscale_start_compose: true

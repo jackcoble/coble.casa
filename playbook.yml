@@ -10,6 +10,8 @@
   roles:
     - docker
     - nfs
+    - role: tailscale
+      tailscale_auth_key: "{{ secrets.tailscale_auth_key }}"
   tasks:
     - name: Debug Tailscale Auth Key
       ansible.builtin.debug:
