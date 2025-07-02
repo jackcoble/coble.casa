@@ -15,3 +15,11 @@ ansible-galaxy collection install community.sops
 When `ansible-playbook` is executed, the secrets file is decrypted locally and
 the values are injected into the tasks without requiring any keys on the target
 hosts.
+
+# Executing the Playbook
+
+This playbook is developed in mind for just 1 server at the moment, my primary home server.
+
+```bash
+ansible-playbook --ask-become-pass -i inventory.ini playbook.yml
+```
