@@ -3,7 +3,7 @@
   hosts: all
   become: true
   pre_tasks:
-    - name: Load secrets with sops
+    - name: Load secrets with SOPS
       community.sops.load_vars:
         file: secrets/secrets.yaml
         name: secrets
@@ -11,7 +11,6 @@
     - docker
     - nfs
   tasks:
-    - name: Example use of loaded secret
-      debug:
-        msg: "Tailscale key loaded"
-      no_log: true
+    - name: Debug Tailscale Auth Key
+      ansible.builtin.debug:
+        msg: "Tailscale key: {{ secrets.tailscale_auth_key }}"
