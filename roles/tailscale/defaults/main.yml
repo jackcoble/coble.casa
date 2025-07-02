@@ -1,5 +1,5 @@
 ---
 tailscale_image: "tailscale/tailscale:stable"
-tailscale_host_name: "docker-vm-ansible"
+tailscale_host_name: "beelink-mini-s12"
 tailscale_compose_dir: "/opt/docker/tailscale"
 tailscale_auth_key: "{{ secrets.tailscale_auth_key }}"
