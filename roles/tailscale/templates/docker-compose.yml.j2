@@ -1,18 +1,14 @@
-version: '3.8'
 services:
   tailscale:
     image: {{ tailscale_image }}
-    container_name: {{ tailscale_container_name }}
+    hostname: {{ tailscale_host_name }}
     network_mode: host
     cap_add:
       - NET_ADMIN
-      - NET_RAW
-    volumes:
-      - {{ tailscale_volume_name }}:/var/lib
+    devices:
       - /dev/net/tun:/dev/net/tun
     env_file:
       - .env
-    command: tailscaled
+    volumes:
+      - {{ tailscale_compose_dir }}/data:/var/lib
     restart: unless-stopped
-volumes:
-  {{ tailscale_volume_name }}:

@@ -1,7 +1,5 @@
 ---
-tailscale_image: "tailscale/tailscale:latest"
-tailscale_container_name: "tailscale"
+tailscale_image: "tailscale/tailscale:stable"
+tailscale_host_name: "docker-vm-ansible"
 tailscale_compose_dir: "/opt/docker/tailscale"
-tailscale_volume_name: "tailscale-data"
-tailscale_auth_key: ""
-tailscale_start_compose: true
+tailscale_auth_key: "{{ secrets.tailscale_auth_key }}"
