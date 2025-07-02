@@ -56,4 +56,4 @@
     state: directory
     owner: root
     group: docker
-    mode: '0755'
+    mode: '2775'

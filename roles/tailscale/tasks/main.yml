@@ -5,7 +5,7 @@
     state: directory
     owner: root
     group: docker
-    mode: '0755'
+    mode: '2775'
 
 - name: Write tailscale env file
   ansible.builtin.copy:
@@ -14,7 +14,7 @@
       TAILSCALE_AUTHKEY={{ tailscale_auth_key }}
     owner: root
     group: docker
-    mode: '0600'
+    mode: '0660'
 
 - name: Deploy docker-compose file
   ansible.builtin.template:
@@ -22,7 +22,7 @@
     dest: "{{ tailscale_compose_dir }}/docker-compose.yml"
     owner: root
     group: docker
-    mode: '0644'
+    mode: '0660'
 
 - name: Start tailscale container with docker compose
   ansible.builtin.command:
