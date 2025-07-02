@@ -1,0 +1,29 @@
+---
+- name: Ensure Immich directory exists
+  ansible.builtin.file:
+    path: "/opt/docker/immich"
+    state: directory
+    owner: root
+    group: docker
+    mode: '0755'
+
+- name: Deploy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "/opt/docker/immich/docker-compose.yml"
+    owner: root
+    group: docker
+    mode: '0644'
+
+- name: Deploy Env file
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "/opt/docker/immich/.env"
+    owner: root
+    group: docker
+    mode: '0644'
+
+- name: Start Immich container
+  community.docker.docker_compose_v2:
+    project_src: "/opt/docker/immich"
+  register: output
