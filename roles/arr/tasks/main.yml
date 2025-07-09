@@ -1,0 +1,21 @@
+---
+- name: Ensure Arr directory exists
+  ansible.builtin.file:
+    path: "/opt/docker/arr"
+    state: directory
+    owner: root
+    group: docker
+    mode: '0755'
+
+- name: Deploy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "/opt/docker/arr/docker-compose.yml"
+    owner: root
+    group: docker
+    mode: '0644'
+
+- name: Start Arr containers
+  community.docker.docker_compose_v2:
+    project_src: "/opt/docker/arr"
+  register: output

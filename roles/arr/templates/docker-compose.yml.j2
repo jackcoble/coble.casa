@@ -1,0 +1,15 @@
+services:
+    # VPN Client
+    gluetun:
+        image: qmcgaw/gluetun
+        cap_add:
+            - NET_ADMIN
+        volumes:
+            - ./data/gluetun:/gluetun
+        environment:
+            - VPN_SERVICE_PROVIDER=mullvad
+            - VPN_TYPE=wireguard
+            - WIREGUARD_PRIVATE_KEY={{ secrets.mullvad_private_key }}
+            - WIREGUARD_ADDRESSES=10.75.42.13/32
+            - SERVER_CITIES=London
+            - SERVER_COUNTRIES=UK
