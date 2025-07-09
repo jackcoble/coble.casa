@@ -26,7 +26,7 @@
   mount:
     path: "{{ item.mount_point }}"
     src: "{{ nfs_server }}:{{ item.path }}"
-    fstype: nfs
+    fstype: nfs4
     opts: "defaults,_netdev,x-systemd.automount"
     state: mounted
   loop: "{{ nfs_shares }}"
