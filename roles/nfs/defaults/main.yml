@@ -4,3 +4,7 @@ nfs_shares:
   # Photos share for Immich
   - path: /mnt/tank/photos/Immich
     mount_point: /mnt/photos
+
+  # Lightroom share for Immich
+  - path: /mnt/tank/photos/Lightroom
+    mount_point: /mnt/lightroom
