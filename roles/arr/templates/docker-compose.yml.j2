@@ -2,6 +2,7 @@ services:
     # VPN Client
     gluetun:
         image: qmcgaw/gluetun
+        container_name: gluetun
         cap_add:
             - NET_ADMIN
         volumes:
@@ -13,3 +14,38 @@ services:
             - WIREGUARD_ADDRESSES=10.75.42.13/32
             - SERVER_CITIES=London
             - SERVER_COUNTRIES=UK
+        ports:
+            - 9696:9696 # Prowlarr
+        restart: unless-stopped
+
+    # Indexer
+    prowlarr:
+        image: lscr.io/linuxserver/prowlarr:latest
+        container_name: prowlarr
+        environment:
+            - PUID=3001
+            - PGID=3001
+            - TZ=Europe/London
+        volumes:
+            - ./data/prowlarr:/config
+        network_mode: service:gluetun
+        restart: unless-stopped
+
+    # Torrent Client
+    rdtclient:
+        image: rogerfar/rdtclient
+        container_name: rdtclient
+        environment:
+            - PUID=3001
+            - PGID=3001
+            - TZ=Europe/London
+        volumes:
+            - ./data/rdtclient:/data/db
+            - /mnt/media/Torrents:/data/downloads
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+        ports:
+            - 6500:6500
+        restart: unless-stopped
