@@ -8,3 +8,7 @@ nfs_shares:
   # Lightroom share for Immich
   - path: /mnt/tank/photos/Lightroom
     mount_point: /mnt/lightroom
+
+  # Media Library share for Plex
+  - path: /mnt/tank/media
+    mount_point: /mnt/media
