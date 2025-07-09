@@ -30,6 +30,7 @@ services:
     restart: always
     healthcheck:
       disable: false
+    user: 3001:3001
 
   immich-machine-learning:
     container_name: immich_machine_learning
