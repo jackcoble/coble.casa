@@ -1,0 +1,21 @@
+---
+- name: Ensure Plex directory exists
+  ansible.builtin.file:
+    path: "/opt/docker/plex"
+    state: directory
+    owner: root
+    group: docker
+    mode: '0755'
+
+- name: Deploy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "/opt/docker/plex/docker-compose.yml"
+    owner: root
+    group: docker
+    mode: '0644'
+
+- name: Start Plex container
+  community.docker.docker_compose_v2:
+    project_src: "/opt/docker/plex"
+  register: output
