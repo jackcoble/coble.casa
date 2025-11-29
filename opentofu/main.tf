@@ -7,12 +7,47 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_24_04_cloud_image" 
   url                = "https://cloud-images.ubuntu.com/noble/20251126/noble-server-cloudimg-amd64.img"
 }
 
+# Cloud Init
+resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
+  content_type = "snippets"
+  datastore_id = "local"
+  node_name    = "pve"
+
+  source_raw {
+    data = <<-EOF
+    #cloud-config
+    hostname: k8s-control-plane
+    timezone: Europe/London
+    users:
+      - default
+      - name: ubuntu
+        groups:
+          - sudo
+        shell: /bin/bash
+        sudo: ALL=(ALL) NOPASSWD:ALL
+    package_update: true
+    packages:
+      - qemu-guest-agent
+      - net-tools
+      - curl
+    runcmd:
+      - systemctl enable qemu-guest-agent
+      - systemctl start qemu-guest-agent
+      - echo "done" > /tmp/cloud-config.done
+    EOF
+
+    file_name = "user-data-cloud-config.yaml"
+  }
+}
+
 # Control Plane VM
 resource "proxmox_virtual_environment_vm" "control_plane_vm" {
   name      = "k8s-control-plane"
   node_name = "pve"
 
-  stop_on_destroy = true
+  agent {
+    enabled = true
+  }
 
   cpu {
     cores = 2
@@ -45,13 +80,15 @@ resource "proxmox_virtual_environment_vm" "control_plane_vm" {
 
   initialization {
     # uncomment and specify the datastore for cloud-init disk if default `local-lvm` is not available
-    datastore_id = "local"
+    datastore_id = "local-zfs"
 
     ip_config {
       ipv4 {
         address = "dhcp"
       }
     }
+
+    user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
   }
 
   network_device {
