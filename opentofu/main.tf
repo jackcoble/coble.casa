@@ -7,36 +7,19 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_24_04_cloud_image" 
   url                = "https://cloud-images.ubuntu.com/noble/20251126/noble-server-cloudimg-amd64.img"
 }
 
-# Cloud Init
-resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
+# Cloud Init for Control Plane VM
+resource "proxmox_virtual_environment_file" "k8s_control_plane_cloud_init" {
   content_type = "snippets"
   datastore_id = "local"
   node_name    = "pve"
 
   source_raw {
-    data = <<-EOF
-    #cloud-config
-    hostname: k8s-control-plane
-    timezone: Europe/London
-    users:
-      - default
-      - name: ubuntu
-        groups:
-          - sudo
-        shell: /bin/bash
-        sudo: ALL=(ALL) NOPASSWD:ALL
-    package_update: true
-    packages:
-      - qemu-guest-agent
-      - net-tools
-      - curl
-    runcmd:
-      - systemctl enable qemu-guest-agent
-      - systemctl start qemu-guest-agent
-      - echo "done" > /tmp/cloud-config.done
-    EOF
+    data = templatefile("${path.module}/cloud-init/cloud-init.tftpl", {
+      hostname = "k8s-control-plane"
+      ssh_pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOBt423fvkSC8SeKVPPAl3MFpwvzwBZ8XEBd4/KrINoP"
+    })
 
-    file_name = "user-data-cloud-config.yaml"
+    file_name = "cloud-init-k8s-control-plane.yaml"
   }
 }
 
@@ -54,7 +37,7 @@ resource "proxmox_virtual_environment_vm" "control_plane_vm" {
   }
 
   memory {
-    dedicated = 2048
+    dedicated = 4096
   }
 
   operating_system {
@@ -88,7 +71,7 @@ resource "proxmox_virtual_environment_vm" "control_plane_vm" {
       }
     }
 
-    user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
+    user_data_file_id = proxmox_virtual_environment_file.k8s_control_plane_cloud_init.id
   }
 
   network_device {
