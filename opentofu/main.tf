@@ -1,10 +1,60 @@
-# Rocky Linux 10.1 Cloud Image
-resource "proxmox_virtual_environment_download_file" "rocky_linux_10_cloud_image" {
+# Ubuntu 24.04 LTS Cloud Image (QCOW2)
+resource "proxmox_virtual_environment_download_file" "ubuntu_24_04_cloud_image" {
   content_type       = "import"
   datastore_id       = "local"
-  file_name          = "rocky-linux-10-cloud-image.qcow2"
+  file_name          = "ubuntu-24.04-server-cloudimg-amd64.qcow2"
   node_name          = "pve"
-  url                = "https://dl.rockylinux.org/pub/rocky/10/images/x86_64/Rocky-10-GenericCloud-Base.latest.x86_64.qcow2"
-  checksum           = "28628abf08a134c6f9e1eccbcac3f2898715919a6da294ae2c6cd66d6bc347ad"
-  checksum_algorithm = "sha256"
+  url                = "https://cloud-images.ubuntu.com/noble/20251126/noble-server-cloudimg-amd64.img"
+}
+
+# Control Plane VM
+resource "proxmox_virtual_environment_vm" "control_plane_vm" {
+  name      = "k8s-control-plane"
+  node_name = "pve"
+
+  stop_on_destroy = true
+
+  cpu {
+    cores = 2
+  }
+
+  memory {
+    dedicated = 2048
+  }
+
+  operating_system {
+    type = "l26" # Linux 2.6/3.x/4.x/5.x Kernel
+  }
+
+  disk {
+    datastore_id = "local-zfs"
+    import_from  = proxmox_virtual_environment_download_file.ubuntu_24_04_cloud_image.id
+    interface    = "virtio0"
+    iothread     = true
+    discard      = "on"
+    size         = 20
+  }
+ 
+  # UEFI & EFI Disk
+  machine = "q35"
+  bios = "ovmf"
+  efi_disk {
+    datastore_id = "local-zfs"
+    type = "4m"
+  }
+
+  initialization {
+    # uncomment and specify the datastore for cloud-init disk if default `local-lvm` is not available
+    datastore_id = "local"
+
+    ip_config {
+      ipv4 {
+        address = "dhcp"
+      }
+    }
+  }
+
+  network_device {
+    bridge = "vmbr0"
+  }
 }
