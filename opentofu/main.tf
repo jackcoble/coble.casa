@@ -15,7 +15,7 @@ resource "proxmox_virtual_environment_file" "k8s_control_plane_cloud_init" {
 
   source_raw {
     data = templatefile("${path.module}/cloud-init/cloud-init.tftpl", {
-      hostname = "k8s-control-plane"
+      hostname = "control-plane-01"
       ssh_pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOBt423fvkSC8SeKVPPAl3MFpwvzwBZ8XEBd4/KrINoP"
     })
 
@@ -25,7 +25,7 @@ resource "proxmox_virtual_environment_file" "k8s_control_plane_cloud_init" {
 
 # Control Plane VM
 resource "proxmox_virtual_environment_vm" "control_plane_vm" {
-  name      = "k8s-control-plane"
+  name      = "k8s-control-plane-01"
   node_name = "pve"
 
   agent {
@@ -37,7 +37,7 @@ resource "proxmox_virtual_environment_vm" "control_plane_vm" {
   }
 
   memory {
-    dedicated = 4096
+    dedicated = 2048
   }
 
   operating_system {
