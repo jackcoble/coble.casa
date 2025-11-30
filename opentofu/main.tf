@@ -9,75 +9,38 @@ resource "proxmox_virtual_environment_download_file" "rocky_linux_10_cloud_image
   checksum_algorithm = "sha256"
 }
 
-# Cloud Init for Control Plane VM
-resource "proxmox_virtual_environment_file" "k8s_control_plane_cloud_init" {
-  content_type = "snippets"
-  datastore_id = "local"
-  node_name    = "pve"
-
-  source_raw {
-    data = templatefile("${path.module}/cloud-init/cloud-init.tftpl", {
-      hostname = "control-plane-01"
-      ssh_pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOBt423fvkSC8SeKVPPAl3MFpwvzwBZ8XEBd4/KrINoP"
-    })
-
-    file_name = "cloud-init-k8s-control-plane.yaml"
-  }
+# VM for Kubernetes Control Plane
+module "control_plane_vm_01" {
+  source      = "./modules/k8s-node"
+  
+  node_name = "pve"
+  vm_name = "k8s-control-plane-01"
+  hostname = "control-plane-01"
+  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
+  ipv4_address   = "dhcp"
+  ssh_pubkey     = var.ssh_pubkey
 }
 
-# Control Plane VM
-resource "proxmox_virtual_environment_vm" "control_plane_vm" {
-  name      = "k8s-control-plane-01"
+# VM for Kubernetes Worker Node 1
+module "worker_node_vm_01" {
+  source      = "./modules/k8s-node"
+  
   node_name = "pve"
+  vm_name = "k8s-worker-01"
+  hostname = "worker-01"
+  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
+  ipv4_address   = "dhcp"
+  ssh_pubkey     = var.ssh_pubkey
+}
 
-  agent {
-    enabled = true
-  }
-
-  cpu {
-    cores = 2
-    type = "host"
-  }
-
-  memory {
-    dedicated = 2048
-  }
-
-  operating_system {
-    type = "l26" # Linux 2.6/3.x/4.x/5.x Kernel
-  }
-
-  disk {
-    datastore_id = "local-zfs"
-    import_from  = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
-    interface    = "virtio0"
-    iothread     = true
-    discard      = "on"
-    size         = 20
-  }
- 
-  # UEFI & EFI Disk
-  machine = "q35"
-  bios = "ovmf"
-  efi_disk {
-    datastore_id = "local-zfs"
-    type = "4m"
-  }
-
-  initialization {
-    # uncomment and specify the datastore for cloud-init disk if default `local-lvm` is not available
-    datastore_id = "local-zfs"
-
-    ip_config {
-      ipv4 {
-        address = "dhcp"
-      }
-    }
-
-    user_data_file_id = proxmox_virtual_environment_file.k8s_control_plane_cloud_init.id
-  }
-
-  network_device {
-    bridge = "vmbr0"
-  }
+# VM for Kubernetes Worker Node 2
+module "worker_node_vm_02" {
+  source      = "./modules/k8s-node"
+  
+  node_name = "pve"
+  vm_name = "k8s-worker-02"
+  hostname = "worker-02"
+  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
+  ipv4_address   = "dhcp"
+  ssh_pubkey     = var.ssh_pubkey
 }
