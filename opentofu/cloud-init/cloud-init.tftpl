@@ -17,6 +17,7 @@ packages:
   - net-tools
   - curl
 runcmd:
+  - swapoff -a
   - systemctl enable qemu-guest-agent
   - systemctl start qemu-guest-agent
   - echo "done" > /tmp/cloud-config.done
