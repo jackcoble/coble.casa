@@ -1,9 +1,10 @@
 #cloud-config
 hostname: ${hostname}
+fqdn: ${hostname}.local
 timezone: Europe/London
 users:
   - default
-  - name: ubuntu
+  - name: rocky
     groups:
       - sudo
     shell: /bin/bash
