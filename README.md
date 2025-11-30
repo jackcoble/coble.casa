@@ -27,3 +27,8 @@ The base OS for my machine is [Proxmox VE](https://www.proxmox.com/en/). It's be
 ### TrueNAS CE (VM)
 
 The bulk of my data is stored on a TrueNAS VM, with the HBA card passed through to the VM. I know there is a stigma about virtualising your storage appliance, but it has been working flawlessly for me.
+
+## Todo
+[x] OpenTofu to provision Rocky Linux VMs with Cloud-Init
+[ ] Ansible to bootstrap VMs with Kubernetes
+[ ] Kubernetes deployment manifests, Flux CD, etc
