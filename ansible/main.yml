@@ -1,0 +1,7 @@
+---
+- name: Homelab
+  hosts: homelab
+  become: true
+  roles:
+    - tailscale
+    - podman

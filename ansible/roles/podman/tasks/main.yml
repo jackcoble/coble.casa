@@ -1,0 +1,16 @@
+---
+- name: Upgrade to latest packages
+  ansible.builtin.dnf:
+    name: '*'
+    state: latest
+    
+- name: Ensure podman is installed
+  ansible.builtin.dnf:
+    name: podman
+    state: present
+
+- name: Ensure podman service is enabled and started
+  ansible.builtin.systemd:
+    name: podman
+    enabled: true
+    state: started
