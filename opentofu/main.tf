@@ -14,25 +14,11 @@ module "tailscale_subnet_router_vm" {
   source         = "./modules/rocky-vm"
   
   node_name      = "pve"
-  vm_name        = "tailscale-subnet-router"
+  vm_name        = "tailscale-router"
   hostname       = "tailscale-router"
   cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
   ipv4_address   = "dhcp"
   ssh_pubkey     = var.ssh_pubkey
   cpu_cores      = 1
   memory         = 2 * 1024
-}
-
-# VM for Immich
-module "immich_vm" {
-  source         = "./modules/rocky-vm"
-  
-  node_name      = "pve"
-  vm_name        = "immich-next"
-  hostname       = "immich"
-  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
-  ipv4_address   = "dhcp"
-  ssh_pubkey     = var.ssh_pubkey
-  cpu_cores      = 4
-  memory         = 8 * 1024
 }
