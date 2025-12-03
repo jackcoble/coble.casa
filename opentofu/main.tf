@@ -9,38 +9,16 @@ resource "proxmox_virtual_environment_download_file" "rocky_linux_10_cloud_image
   checksum_algorithm = "sha256"
 }
 
-# VM for Kubernetes Control Plane
-module "control_plane_vm_01" {
-  source      = "./modules/k8s-node"
+# VM for Immich
+module "immich_vm" {
+  source         = "./modules/rocky-vm"
   
-  node_name = "pve"
-  vm_name = "k8s-control-plane-01"
-  hostname = "control-plane-01"
+  node_name      = "pve"
+  vm_name        = "immich-next"
+  hostname       = "immich"
   cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
   ipv4_address   = "dhcp"
   ssh_pubkey     = var.ssh_pubkey
-}
-
-# VM for Kubernetes Worker Node 1
-module "worker_node_vm_01" {
-  source      = "./modules/k8s-node"
-  
-  node_name = "pve"
-  vm_name = "k8s-worker-01"
-  hostname = "worker-01"
-  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
-  ipv4_address   = "dhcp"
-  ssh_pubkey     = var.ssh_pubkey
-}
-
-# VM for Kubernetes Worker Node 2
-module "worker_node_vm_02" {
-  source      = "./modules/k8s-node"
-  
-  node_name = "pve"
-  vm_name = "k8s-worker-02"
-  hostname = "worker-02"
-  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
-  ipv4_address   = "dhcp"
-  ssh_pubkey     = var.ssh_pubkey
+  cpu_cores      = 4
+  memory         = 8 * 1024
 }

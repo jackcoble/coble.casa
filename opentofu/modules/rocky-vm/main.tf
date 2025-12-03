@@ -15,7 +15,7 @@ resource "proxmox_virtual_environment_file" "cloud_init" {
 resource "proxmox_virtual_environment_vm" "vm" {
   name      = var.vm_name
   node_name = var.node_name
-  tags = [ "kubernetes", "rockylinux" ]
+  tags = [ "rockylinux" ]
 
   agent {
     enabled = true
