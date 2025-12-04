@@ -6,4 +6,5 @@
         file: ../secrets/secrets.yaml
         name: secrets
   roles:
+    - firewalld
     - tailscale
