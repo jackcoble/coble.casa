@@ -7,4 +7,5 @@
         name: secrets
   roles:
     - firewalld
+    - dnsmasq
     - tailscale

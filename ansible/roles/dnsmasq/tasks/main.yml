@@ -1,0 +1,35 @@
+---
+- name: Ensure that Dnsmasq is installed
+  ansible.builtin.dnf:
+    name: dnsmasq
+    state: present
+
+- name: Ensure Dnsmasq config directory exists
+  ansible.builtin.file:
+    path: /etc/dnsmasq.d
+    state: directory
+
+- name: Deploy coble.casa dnsmasq config
+  ansible.builtin.copy:
+    dest: /etc/dnsmasq.d/coble.conf
+    content: |
+      listen-address=127.0.0.1,{{ dns_server_ip }}
+      domain=coble.casa
+      address=/.coble.casa/{{ reverse_proxy_ip }} # Point all coble.casa subdomains to reverse proxy
+      server=1.1.1.1
+      server=8.8.8.8
+      log-queries
+      log-facility=/var/log/dnsmasq.log
+
+- name: Enable and start dnsmasq
+  ansible.builtin.service:
+    name: dnsmasq
+    state: started
+    enabled: yes
+
+- name: Expose ports 53 TCP and UDP in firewalld for dnsmasq
+  ansible.posix.firewalld:
+    service: dns
+    permanent: true
+    state: enabled
+    immediate: yes
