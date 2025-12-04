@@ -27,43 +27,25 @@
     tailscale_json: "{{ tailscale_status.stdout | from_json }}"
   when: tailscale_status.rc == 0
 
-- name: Authenticate Tailscale with auth key
-  ansible.builtin.command: >
-    tailscale up --authkey {{ secrets.tailscale_auth_key }} --accept-dns=false
-  when: tailscale_status.rc != 0 or tailscale_json.BackendState != "Running"
-  register: tailscale_auth
-  changed_when: tailscale_auth.rc == 0
-
-- name: Expose subnet routes
-  ansible.builtin.command: >
-    tailscale set --advertise-routes={{ tailscale_subnet_routes }}
-  when: >
-    tailscale_json.Self.PrimaryRoutes is not defined or
-    tailscale_subnet_routes not in (tailscale_json.Self.PrimaryRoutes | join(','))
-  register: tailscale_routes
-  changed_when: tailscale_routes.rc == 0
-
-# See Tailscale KB: https://tailscale.com/kb/1019/subnets#enable-ip-forwarding
-# Both IPv4 and IPv6 forwarding need to be enabled for subnet routing to work properly
-# Also need to enable masquerading in firewalld
-- name: Enable IPv4 forwarding for Tailscale
-  ansible.posix.sysctl:
+- name: Ensure IPv4 forwarding is enabled
+  ansible.builtin.sysctl:
     name: net.ipv4.ip_forward
     value: '1'
     sysctl_file: /etc/sysctl.d/99-tailscale.conf
     state: present
     reload: yes
 
-- name: Enable IPv6 forwarding for Tailscale
-  ansible.posix.sysctl:
+- name: Ensure IPv6 forwarding is enabled
+  ansible.builtin.sysctl:
     name: net.ipv6.conf.all.forwarding
     value: '1'
     sysctl_file: /etc/sysctl.d/99-tailscale.conf
     state: present
     reload: yes
 
-- name: Allow masquerading in firewalld for Tailscale
-  ansible.posix.firewalld:
-    masquerade: yes
-    permanent: yes
-    state: enabled
+- name: Start Tailscale
+  ansible.builtin.command: >
+    tailscale up --authkey {{ secrets.tailscale_auth_key }} --advertise-routes={{ tailscale_subnet_routes }} --accept-dns=false --accept-routes=true
+  when: tailscale_status.rc != 0 or tailscale_json.BackendState != "Running"
+  register: tailscale_auth
+  changed_when: tailscale_auth.rc == 0
