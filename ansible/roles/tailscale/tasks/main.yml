@@ -15,37 +15,3 @@
     name: tailscaled
     enabled: true
     state: started
-
-- name: Check Tailscale status
-  ansible.builtin.command: tailscale status --json
-  register: tailscale_status
-  changed_when: false
-  failed_when: false
-
-- name: Parse Tailscale status
-  ansible.builtin.set_fact:
-    tailscale_json: "{{ tailscale_status.stdout | from_json }}"
-  when: tailscale_status.rc == 0
-
-- name: Ensure IPv4 forwarding is enabled
-  ansible.builtin.sysctl:
-    name: net.ipv4.ip_forward
-    value: '1'
-    sysctl_file: /etc/sysctl.d/99-tailscale.conf
-    state: present
-    reload: yes
-
-- name: Ensure IPv6 forwarding is enabled
-  ansible.builtin.sysctl:
-    name: net.ipv6.conf.all.forwarding
-    value: '1'
-    sysctl_file: /etc/sysctl.d/99-tailscale.conf
-    state: present
-    reload: yes
-
-- name: Start Tailscale
-  ansible.builtin.command: >
-    tailscale up --authkey {{ secrets.tailscale_auth_key }} --advertise-routes={{ tailscale_subnet_routes }} --accept-dns=false --accept-routes=true
-  when: tailscale_status.rc != 0 or tailscale_json.BackendState != "Running"
-  register: tailscale_auth
-  changed_when: tailscale_auth.rc == 0
