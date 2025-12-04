@@ -1,0 +1,9 @@
+- hosts: homelab
+  become: true
+  pre_tasks:
+    - name: Load secrets with SOPS
+      community.sops.load_vars:
+        file: ../secrets/secrets.yaml
+        name: secrets
+  roles:
+    - tailscale
