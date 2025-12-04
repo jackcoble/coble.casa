@@ -48,6 +48,12 @@ variable "ipv4_address" {
   default     = "dhcp"
 }
 
+variable "mac_address" {
+  description = "MAC address (optional)"
+  type        = string
+  default     = ""
+}
+
 variable "cloud_image_id" {
   description = "Cloud image file ID to import from"
   type        = string

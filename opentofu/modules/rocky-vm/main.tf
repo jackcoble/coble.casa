@@ -65,5 +65,6 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   network_device {
     bridge = "vmbr0"
+    mac_address = var.mac_address != "" ? var.mac_address : null
   }
 }

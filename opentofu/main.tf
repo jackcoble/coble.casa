@@ -18,6 +18,7 @@ module "tailscale_vm" {
   hostname       = "dns"
   cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
   ipv4_address   = "dhcp"
+  mac_address    = "BC:24:11:38:74:3D"
   ssh_pubkey     = var.ssh_pubkey
   cpu_cores      = 1
   memory         = 1 * 1024
