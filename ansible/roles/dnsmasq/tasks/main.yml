@@ -1,15 +1,15 @@
 ---
-- name: Ensure that Dnsmasq is installed
+- name: Ensure that dnsmasq is installed
   ansible.builtin.dnf:
     name: dnsmasq
     state: present
 
-- name: Ensure Dnsmasq config directory exists
+- name: Ensure dnsmasq config directory exists
   ansible.builtin.file:
     path: /etc/dnsmasq.d
     state: directory
 
-- name: Deploy Dnsmasq configuration
+- name: Deploy dnsmasq configuration
   ansible.builtin.template:
     src: dnsmasq.conf.j2
     dest: /etc/dnsmasq.conf

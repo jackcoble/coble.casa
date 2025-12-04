@@ -4,6 +4,8 @@
     url: https://pkgs.tailscale.com/stable/rhel/10/tailscale.repo
     dest: /etc/yum.repos.d/tailscale-stable.repo
     mode: '0644'
+    owner: root
+    group: root
 
 - name: Install Tailscale
   ansible.builtin.dnf:
