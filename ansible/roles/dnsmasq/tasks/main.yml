@@ -9,17 +9,10 @@
     path: /etc/dnsmasq.d
     state: directory
 
-- name: Deploy coble.casa dnsmasq config
-  ansible.builtin.copy:
-    dest: /etc/dnsmasq.d/coble.conf
-    content: |
-      listen-address=127.0.0.1,{{ dns_server_ip }}
-      domain=coble.casa
-      address=/.coble.casa/{{ reverse_proxy_ip }} # Point all coble.casa subdomains to reverse proxy
-      server=1.1.1.1
-      server=8.8.8.8
-      log-queries
-      log-facility=/var/log/dnsmasq.log
+- name: Deploy Dnsmasq configuration
+  ansible.builtin.template:
+    src: dns.conf.j2
+    dest: /etc/dnsmasq.d/dns.conf
 
 - name: Enable and start dnsmasq
   ansible.builtin.service:
