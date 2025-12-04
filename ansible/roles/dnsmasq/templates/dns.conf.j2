@@ -2,5 +2,8 @@ listen-address=127.0.0.1,{{ dns_server_ip }}
 address=/.coble.casa/{{ reverse_proxy_ip }} # Point all *.coble.casa subdomains to reverse proxy
 server=1.1.1.1
 server=1.0.0.1
+domain=coble.casa
+domain-needed
+bogus-priv
 log-queries
 log-facility=/var/log/dnsmasq.log
