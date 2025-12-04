@@ -42,3 +42,28 @@
     tailscale_subnet_routes not in (tailscale_json.Self.PrimaryRoutes | join(','))
   register: tailscale_routes
   changed_when: tailscale_routes.rc == 0
+
+# See Tailscale KB: https://tailscale.com/kb/1019/subnets#enable-ip-forwarding
+# Both IPv4 and IPv6 forwarding need to be enabled for subnet routing to work properly
+# Also need to enable masquerading in firewalld
+- name: Enable IPv4 forwarding for Tailscale
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_file: /etc/sysctl.d/99-tailscale.conf
+    state: present
+    reload: yes
+
+- name: Enable IPv6 forwarding for Tailscale
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: '1'
+    sysctl_file: /etc/sysctl.d/99-tailscale.conf
+    state: present
+    reload: yes
+
+- name: Allow masquerading in firewalld for Tailscale
+  ansible.posix.firewalld:
+    masquerade: yes
+    permanent: yes
+    state: enabled
