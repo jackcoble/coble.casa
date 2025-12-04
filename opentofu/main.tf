@@ -10,15 +10,15 @@ resource "proxmox_virtual_environment_download_file" "rocky_linux_10_cloud_image
 }
 
 # VM for Tailscale Subnet Router
-module "tailscale_subnet_router_vm" {
+module "tailscale_vm" {
   source         = "./modules/rocky-vm"
   
   node_name      = "pve"
-  vm_name        = "tailscale-router"
-  hostname       = "tailscale-router"
+  vm_name        = "tailscale"
+  hostname       = "tailscale"
   cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
   ipv4_address   = "dhcp"
   ssh_pubkey     = var.ssh_pubkey
   cpu_cores      = 1
-  memory         = 2 * 1024
+  memory         = 1 * 1024
 }
