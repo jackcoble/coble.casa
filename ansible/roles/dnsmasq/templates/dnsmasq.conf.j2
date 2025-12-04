@@ -1,9 +1,8 @@
-listen-address=127.0.0.1,{{ dns_server_ip }}
-address=/.coble.casa/{{ reverse_proxy_ip }} # Point all *.coble.casa subdomains to reverse proxy
+listen-address=127.0.0.1,{{ dns_server_ip }} # only bind to localhost and the ip of this server
+address=/.coble.casa/{{ reverse_proxy_ip }} # point all *.coble.casa subdomains to reverse proxy
 server=1.1.1.1
 server=1.0.0.1
-domain=coble.casa
-domain-needed
-bogus-priv
+no-resolv # don't use /etc/resolv.conf, specifically because it this service is providing the resolution found in that file and it would be a recursive loop
+domain-needed # anything without dots does not get forwarded to DNS
 log-queries
 log-facility=/var/log/dnsmasq.log
