@@ -12,6 +12,8 @@ users:
 ssh_authorized_keys:
   - ${ssh_pubkey}
 package_update: true
+package_upgrade: true
+package_reboot_if_required: true
 packages:
   - qemu-guest-agent
   - net-tools
