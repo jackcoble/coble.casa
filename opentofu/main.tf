@@ -9,13 +9,13 @@ resource "proxmox_virtual_environment_download_file" "rocky_linux_10_cloud_image
   checksum_algorithm = "sha256"
 }
 
-# VM for Tailscale Subnet Router
+# VM for DNS Server + Tailscale Subnet Router
 module "tailscale_vm" {
   source         = "./modules/rocky-vm"
   
   node_name      = "pve"
-  vm_name        = "tailscale"
-  hostname       = "tailscale"
+  vm_name        = "dns"
+  hostname       = "dns"
   cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
   ipv4_address   = "dhcp"
   ssh_pubkey     = var.ssh_pubkey
