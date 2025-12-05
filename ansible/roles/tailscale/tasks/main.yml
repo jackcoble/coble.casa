@@ -12,8 +12,37 @@
     name: tailscale
     state: present
 
+- name: Enable IPv4 forwarding
+  ansible.builtin.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    state: present
+    reload: yes
+
+- name: Enable IPv6 forwarding
+  ansible.builtin.sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: '1'
+    state: present
+    reload: yes
+
+- name: Allow masquerading in firewalld
+  ansible.posix.firewalld:
+    masquerade: yes
+    zone: public
+    permanent: true
+    state: enabled
+    immediate: yes
+
 - name: Enable and start Tailscale service
   ansible.builtin.systemd:
     name: tailscaled
     enabled: true
     state: started
+
+- name: Authenticate Tailscale with auth key and advertise routes
+  ansible.builtin.command: >
+    tailscale up
+    --authkey {{ secrets.tailscale_auth_key }}
+    --advertise-routes={{ tailscale_subnet_routes }}
+    --accept-routes
