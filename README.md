@@ -29,3 +29,25 @@ Proxmox is powerful as it exposes an API for users to interact with; paired with
 ### TrueNAS CE (VM)
 
 The bulk of my data is stored on a virtualised TrueNAS server, with the HBA card passed through directly to the VM. I mostly wanted to take advantage of ZFS and the features it has to offer, such as snapshots. It's certainly overkill for what I currently use it for (serving directories via SMB and NFS).
+
+## Deploying 🚀
+
+### Infrastructure
+
+Let's start with provisioning VMs.
+
+```bash
+$ cd opentofu/
+$ tofu apply
+```
+
+I'll get a coffee whilst that provisions all the VMs.
+
+### Services
+
+The most important VM is Tailscale, so we will start with that first.
+
+```bash
+$ cd ansible/
+$ ansible-playbook setup-tailscale.yml
+```
