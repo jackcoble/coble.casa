@@ -23,3 +23,18 @@ module "tailscale_vm" {
   cpu_cores      = 1
   memory         = 1 * 1024
 }
+
+# VM for Docker containers
+module "docker_vm" {
+  source         = "./modules/rocky-vm"
+  
+  node_name      = "pve"
+  vm_name        = "docker"
+  hostname       = "docker"
+  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
+  ipv4_address   = "dhcp"
+  mac_address    = "BC:24:11:38:74:3E"
+  ssh_pubkey     = var.ssh_pubkey
+  cpu_cores      = 4
+  memory         = 16 * 1024
+}
