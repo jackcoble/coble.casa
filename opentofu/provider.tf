@@ -1,4 +1,6 @@
 terraform {
+  required_version = "1.10.7"
+
   # Terraform State Backend Configuration
   backend "s3" {
     bucket = "coble.casa"
