@@ -18,6 +18,11 @@ terraform {
       source  = "bpg/proxmox"
       version = "0.88.0"
     }
+
+    tailscale = {
+      source  = "tailscale/tailscale"
+      version = "0.24.0"
+    }
   }
 }
 
@@ -32,4 +37,9 @@ provider "proxmox" {
     agent    = true
     username = "terraform"
   }
+}
+
+provider "tailscale" {
+  api_key = provider::sops::file("../secrets/secrets.yaml", "yaml").data.tailscale_api_key
+  tailnet = "jackcoble.github"
 }
