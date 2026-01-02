@@ -1,0 +1,23 @@
+name: Lint OpenTofu Configuration
+
+on:
+    push:
+        paths:
+            - 'opentofu/**'
+
+    pull_request:
+        paths:
+            - 'opentofu/**'
+
+jobs:
+    tflint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            
+            - uses: terraform-linters/setup-tflint@v4
+            - run: tflint --init
+              working-directory: opentofu
+            
+            - run: tflint
+              working-directory: opentofu
