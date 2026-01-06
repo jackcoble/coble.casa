@@ -21,6 +21,6 @@ jobs:
           fetch-depth: 0
 
       - name: Run ansible-lint
-        uses: ansible/ansible-lint-action@v5
+        uses: ansible/ansible-lint@main
         with:
-          target: "./ansible"
+          working_directory: "./ansible"
