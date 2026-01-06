@@ -1,0 +1,26 @@
+name: Lint Ansible Playbooks
+
+on:
+    push:
+        paths:
+            - 'ansible/**'
+
+    pull_request:
+        paths:
+            - 'ansible/**'
+
+jobs:
+  ansible-lint:
+    name: Lint Ansible
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint-action@v5
+        with:
+          target: "./ansible"
