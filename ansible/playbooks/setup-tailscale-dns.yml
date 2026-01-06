@@ -1,9 +1,10 @@
-- hosts: homelab
+- name: Setup Tailscale with split DNS
+  hosts: dns
   become: true
   pre_tasks:
     - name: Load secrets with SOPS
       community.sops.load_vars:
-        file: ../secrets/secrets.yaml
+        file: ../../secrets/secrets.yaml
         name: secrets
   roles:
     - firewalld

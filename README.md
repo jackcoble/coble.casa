@@ -2,7 +2,7 @@
 
 This repository contains all of the configuration for my homelab. The idea is for my setup to be reproducable and use open source tools such as Proxmox, OpenTofu and Ansible.
 
-* [Proxmox VE 9.0](https://www.proxmox.com/en/) - my hypervisor of choice
+* [Proxmox VE 9.1](https://www.proxmox.com/en/) - my hypervisor of choice
 * [OpenTofu](https://opentofu.org) - create and manage VMs on my Proxmox host
 * [Ansible](https://docs.ansible.com/) - bootstrap VMs with their applications
 
@@ -45,9 +45,11 @@ I'll get a coffee whilst that provisions all the VMs.
 
 ### Services
 
-The most important VM is Tailscale, so we will start with that first.
+#### Tailscale & DNS
+
+The most important VM is Tailscale, as that is our "entrypoint" into the network, and also our DNS server!
 
 ```bash
 $ cd ansible/
-$ ansible-playbook setup-tailscale.yml
+$ ansible-playbook playbooks/setup-tailscale-dns.yml
 ```
