@@ -3,7 +3,7 @@
   ansible.builtin.dnf:
     name: '*'
     state: latest
-    
+
 - name: Ensure podman is installed
   ansible.builtin.dnf:
     name: podman
