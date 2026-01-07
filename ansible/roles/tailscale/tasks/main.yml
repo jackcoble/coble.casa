@@ -40,10 +40,17 @@
     enabled: true
     state: started
 
-- name: Authenticate Tailscale with auth key and advertise routes
+- name: Check Tailscale status
+  ansible.builtin.command: tailscale status --json
+  register: tailscale_status
+  changed_when: false
+
+- name: Bring up Tailscale with auth key and advertise routes
   ansible.builtin.command: >
     tailscale up
     --reset
     --authkey {{ secrets.tailscale_auth_key }}
     --advertise-routes={{ tailscale_subnet_routes }}
     --accept-dns=false
+  when: not (tailscale_status.stdout | from_json).Self.Online
+  changed_when: false
