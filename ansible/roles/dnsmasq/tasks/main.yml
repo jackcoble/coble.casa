@@ -19,11 +19,11 @@
   ansible.builtin.service:
     name: dnsmasq
     state: started
-    enabled: yes
+    enabled: true
 
 - name: Expose ports 53 TCP and UDP in firewalld for dnsmasq
   ansible.posix.firewalld:
     service: dns
     permanent: true
     state: enabled
-    immediate: yes
+    immediate: true

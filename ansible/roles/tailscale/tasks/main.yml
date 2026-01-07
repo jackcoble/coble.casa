@@ -13,26 +13,26 @@
     state: present
 
 - name: Enable IPv4 forwarding
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: net.ipv4.ip_forward
     value: '1'
     state: present
-    reload: yes
+    reload: true
 
 - name: Enable IPv6 forwarding
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: net.ipv6.conf.all.forwarding
     value: '1'
     state: present
-    reload: yes
+    reload: true
 
 - name: Allow masquerading in firewalld
   ansible.posix.firewalld:
-    masquerade: yes
+    masquerade: true
     zone: public
     permanent: true
     state: enabled
-    immediate: yes
+    immediate: true
 
 - name: Enable and start Tailscale service
   ansible.builtin.systemd:
