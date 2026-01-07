@@ -1,5 +1,9 @@
 # coble.casa 🏠
 
+[![Lint Ansible Playbooks](https://github.com/jackcoble/coble.casa/actions/workflows/lint-ansible.yml/badge.svg)](https://github.com/jackcoble/coble.casa/actions/workflows/lint-ansible.yml)
+
+[![Lint OpenTofu Configuration](https://github.com/jackcoble/coble.casa/actions/workflows/lint-opentofu.yml/badge.svg)](https://github.com/jackcoble/coble.casa/actions/workflows/lint-opentofu.yml)
+
 This repository contains all of the configuration for my homelab. The idea is for my setup to be reproducable and use open source tools such as Proxmox, OpenTofu and Ansible.
 
 * [Proxmox VE 9.1](https://www.proxmox.com/en/) - my hypervisor of choice
