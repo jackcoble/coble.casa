@@ -1,0 +1,16 @@
+- name: Update server packages
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update all packages to the latest version
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+
+    - name: Reboot the server if a kernel update was installed
+      ansible.builtin.reboot:
+        msg: "Rebooting after package updates"
+        pre_reboot_delay: 10
+      when: ansible_facts.packages['kernel'] is defined and
+            (ansible_facts.packages['kernel'][0].version != ansible_facts.kernel)
