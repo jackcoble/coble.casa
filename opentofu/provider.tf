@@ -11,6 +11,11 @@ terraform {
 
   # Providers
   required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.28.0"
+    }
+
     sops = {
       source = "nobbs/sops"
       version = "0.3.1"
@@ -29,6 +34,10 @@ terraform {
 }
 
 # Provider Configuration
+provider "aws" {
+  region = "eu-west-2"
+}
+
 provider "sops" {}
 
 provider "proxmox" {
