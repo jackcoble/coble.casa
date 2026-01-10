@@ -38,3 +38,8 @@ module "multifreight_dev_vm" {
   cpu_cores      = 2
   memory         = 4 * 1024
 }
+
+# Home Assistant Backups
+module "hass_backup" {
+  source = "./modules/hass-backup"
+}
