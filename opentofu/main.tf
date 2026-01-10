@@ -43,3 +43,12 @@ module "multifreight_dev_vm" {
 module "hass_backup" {
   source = "./modules/hass-backup"
 }
+
+output "hass_backup_access_key_id" {
+  value = module.hass_backup.home_assistant_backup_access_key_id
+}
+
+output "hass_backup_secret_access_key" {
+  value     = module.hass_backup.home_assistant_backup_secret_access_key
+  sensitive = true
+}
