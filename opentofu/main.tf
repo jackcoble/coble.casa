@@ -39,6 +39,21 @@ module "multifreight_dev_vm" {
   memory         = 4 * 1024
 }
 
+# VM for Docker server
+module "docker_vm" {
+  source         = "./modules/rocky-vm"
+  
+  node_name      = "pve"
+  vm_name        = "docker"
+  hostname       = "docker"
+  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
+  ipv4_address   = "dhcp"
+  mac_address    = "BC:24:11:38:74:3F"
+  ssh_pubkey     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqp2MkLIitzT3ZnYU25wYR/GIyYpLtN9D/aH2WU5jtJ"
+  cpu_cores      = 4
+  memory         = 32 * 1024
+}
+
 # Home Assistant Backups
 module "hass_backup" {
   source = "./modules/hass-backup"
