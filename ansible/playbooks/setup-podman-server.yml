@@ -1,5 +1,5 @@
-- name: Setup Tailscale with split DNS
-  hosts: dns
+- name: Setup Podman and deploy applications
+  hosts: podman
   become: true
   pre_tasks:
     - name: Load secrets with SOPS
@@ -8,6 +8,4 @@
         name: secrets
 
   roles:
-    - firewalld
-    - dnsmasq
-    - tailscale
+    - podman

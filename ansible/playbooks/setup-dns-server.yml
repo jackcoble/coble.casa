@@ -1,0 +1,13 @@
+- name: Setup DNSMasq + Tailscale server
+  hosts: dns
+  become: true
+  pre_tasks:
+    - name: Load secrets with SOPS
+      community.sops.load_vars:
+        file: ../../secrets/secrets.yaml
+        name: secrets
+
+  roles:
+    - firewalld
+    - dnsmasq
+    - tailscale
