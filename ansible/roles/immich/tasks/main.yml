@@ -18,7 +18,7 @@
 - name: Mount Immich library NFS share
   ansible.posix.mount:
     src: "192.168.0.101:/mnt/tank/photos/Immich"
-    path: "/mnt/photos"
+    path: "{{ immich_upload_location }}"
     fstype: nfs4
     opts: "defaults,_netdev,x-systemd.automount"
     state: mounted
