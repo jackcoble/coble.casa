@@ -10,4 +10,5 @@
   roles:
     - caddy
     - immich
+    - arr-stack
     - plex

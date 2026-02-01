@@ -1,0 +1,18 @@
+services:
+    rdtclient:
+      image: rogerfar/rdtclient
+      container_name: rdtclient
+      environment:
+        - PUID=0
+        - PGID=0
+        - TZ=Europe/London
+      volumes:
+        - {{ rdt_client_data_dir }}:/data/db
+        - {{ arr_stack_download_dir }}:/data/downloads
+      logging:
+        driver: json-file
+        options:
+            max-size: 10m
+      ports:
+        - 6500:6500
+      restart: unless-stopped

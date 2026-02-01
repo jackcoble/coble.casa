@@ -1,0 +1,39 @@
+---
+- name: Ensure base "Arr" stack directory exists
+  ansible.builtin.file:
+    path: "{{ arr_stack_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure base "rdt-client" directory exists
+  ansible.builtin.file:
+    path: "{{ rdt_client_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure "rdt-client" data directory exists
+  ansible.builtin.file:
+    path: "{{ rdt_client_data_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ arr_stack_dir }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Arr-stack
+
+- name: Ensure Arr-stack containers are running
+  community.docker.docker_compose_v2:
+    project_src: "{{ arr_stack_dir }}"
+    state: present
+    pull: always

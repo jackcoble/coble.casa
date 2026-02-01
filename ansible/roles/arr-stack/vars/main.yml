@@ -1,0 +1,8 @@
+---
+# shared vars
+arr_stack_dir: "/opt/arr-stack"
+arr_stack_download_dir: "/mnt/media/Downloads"
+
+# rdt-client vars
+rdt_client_dir: "{{ arr_stack_dir }}/rdt-client"
+rdt_client_data_dir: "{{ rdt_client_dir }}/data"
