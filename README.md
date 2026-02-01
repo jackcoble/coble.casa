@@ -57,3 +57,20 @@ The most important VM is Tailscale, as that is our "entrypoint" into the network
 $ cd ansible/
 $ ansible-playbook playbooks/setup-tailscale-dns.yml
 ```
+
+#### Docker Containers
+
+Secondly, we have the VM which runs Docker, which is the runtime for our containers.
+
+Prepare the fresh Rocky VM with the `base.yml` playbook. This only needs to be ran once.
+
+```bash
+$ cd ansible/
+$ ansible-playbook playbooks/base.yml
+```
+
+Once that's been ran, we can spin up all the containers.
+
+```bash
+$ ansible-playbook playbooks/apps.yml
+```

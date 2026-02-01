@@ -8,6 +8,4 @@
         name: secrets
 
   roles:
-    - base
-    - docker
     - immich

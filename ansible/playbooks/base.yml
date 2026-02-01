@@ -1,0 +1,12 @@
+- name: Configure base Rocky Linux system
+  hosts: docker
+  become: true
+  pre_tasks:
+    - name: Load SOPS secrets
+      community.sops.load_vars:
+        file: ../../secrets/secrets.yaml
+        name: secrets
+        
+  roles:
+    - base
+    - docker
