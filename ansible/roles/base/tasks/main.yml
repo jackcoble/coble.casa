@@ -14,6 +14,7 @@
       - unzip
       - wget
       - kernel-modules-extra
+      - nfs-utils
     state: present
   become: true
 
