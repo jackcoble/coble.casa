@@ -1,0 +1,48 @@
+---
+- name: Ensure Caddy base directory exists
+  ansible.builtin.file:
+    path: "{{ caddy_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure Caddy data directory exists
+  ansible.builtin.file:
+    path: "{{ caddy_data_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure Caddy config directory exists
+  ansible.builtin.file:
+    path: "{{ caddy_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy Caddyfile
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: "{{ caddy_caddyfile_dir }}/Caddyfile"
+    owner: root
+    group: root
+    mode: "0640"
+  notify: Restart Caddy
+
+- name: Deploy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ caddy_dir }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Caddy
+
+- name: Ensure Caddy container is running
+  community.docker.docker_compose_v2:
+    project_src: "{{ caddy_dir }}"
+    state: present
+    pull: always

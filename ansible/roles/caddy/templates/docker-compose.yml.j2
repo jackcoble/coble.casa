@@ -1,0 +1,11 @@
+services:
+  caddy:
+    image: caddy:{{ caddy_version }}
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    network_mode: "host"
+    volumes:
+      - {{ caddy_caddyfile_dir }}:/etc/caddy
+      - {{ caddy_data_dir }}:/data
+      - {{ caddy_config_dir }}:/config
