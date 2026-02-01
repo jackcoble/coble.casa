@@ -1,0 +1,48 @@
+---
+- name: Ensure Immich base directory exists
+  ansible.builtin.file:
+    path: "{{ immich_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure Immich upload directory exists
+  ansible.builtin.file:
+    path: "{{ immich_upload_location }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure Immich DB data directory exists
+  ansible.builtin.file:
+    path: "{{ immich_db_data_location }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy Immich environment file
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ immich_dir }}/.env"
+    owner: root
+    group: root
+    mode: "0640"
+  notify: Restart Immich
+
+- name: Deploy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ immich_dir }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Immich
+
+- name: Ensure Immich containers are running
+  community.docker.docker_compose_v2:
+    project_src: "{{ immich_dir }}"
+    state: present
+    pull: always

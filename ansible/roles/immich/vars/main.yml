@@ -1,0 +1,5 @@
+---
+immich_dir: "/opt/immich"
+immich_upload_location: "{{ immich_dir }}/library" # Change this to NFS share at some point
+immich_db_data_location: "{{ immich_dir }}/db"
+immich_db_password: "{{ secrets.immich_db_password }}"
