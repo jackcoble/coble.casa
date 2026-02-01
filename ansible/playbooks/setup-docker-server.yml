@@ -1,5 +1,5 @@
-- name: Setup Podman and deploy applications
-  hosts: podman
+- name: Setup Docker and deploy applications
+  hosts: docker
   become: true
   pre_tasks:
     - name: Load secrets with SOPS
@@ -8,4 +8,5 @@
         name: secrets
 
   roles:
-    - podman
+    - base
+    - docker

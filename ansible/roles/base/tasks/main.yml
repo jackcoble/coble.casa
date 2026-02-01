@@ -1,0 +1,42 @@
+---
+- name: Ensure all packages are up to date
+  dnf:
+    name: "*"
+    state: latest
+  become: true
+
+- name: Install basic utilities
+  dnf:
+    name:
+      - git
+      - curl
+      - vim
+      - unzip
+      - wget
+      - kernel-modules-extra
+    state: present
+  become: true
+
+- name: Reboot server to apply extra kernel modules
+  ansible.builtin.reboot:
+    msg: "Rebooting to load extra kernel modules"
+    reboot_timeout: 300
+
+- name: Ensure firewalld is installed
+  dnf:
+    name: firewalld
+    state: present
+  become: true
+
+- name: Enable and start firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Allow SSH through firewall
+  firewalld:
+    service: ssh
+    permanent: true
+    state: enabled
+    immediate: true
