@@ -6,7 +6,7 @@
       community.sops.load_vars:
         file: ../../secrets/secrets.yaml
         name: secrets
-        
+
   roles:
     - base
     - docker

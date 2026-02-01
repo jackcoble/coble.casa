@@ -1,12 +1,12 @@
 ---
 - name: Ensure all packages are up to date
-  dnf:
+  ansible.builtin.dnf:
     name: "*"
     state: latest
   become: true
 
 - name: Install basic utilities
-  dnf:
+  ansible.builtin.dnf:
     name:
       - git
       - curl
@@ -24,19 +24,19 @@
     reboot_timeout: 300
 
 - name: Ensure firewalld is installed
-  dnf:
+  ansible.builtin.dnf:
     name: firewalld
     state: present
   become: true
 
 - name: Enable and start firewalld
-  service:
+  ansible.builtin.service:
     name: firewalld
     state: started
     enabled: true
 
 - name: Allow SSH through firewall
-  firewalld:
+  ansible.posix.firewalld:
     service: ssh
     permanent: true
     state: enabled
