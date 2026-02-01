@@ -1,0 +1,45 @@
+---
+- name: Ensure Plex directory exists
+  ansible.builtin.file:
+    path: "{{ plex_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure Plex config directory exists
+  ansible.builtin.file:
+    path: "{{ plex_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Mount Plex media library NFS share
+  ansible.posix.mount:
+    src: "192.168.0.101:/mnt/tank/videos"
+    path: "{{ plex_media_dir }}"
+    fstype: nfs4
+    opts: "defaults,_netdev,x-systemd.automount"
+    state: mounted
+
+- name: Deploy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ plex_dir }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Ensure Plex container is running
+  community.docker.docker_compose_v2:
+    project_src: "{{ plex_dir }}"
+    state: present
+    pull: always
+
+- name: Allow Plex Media Server port through the firewall
+  ansible.posix.firewalld:
+    port: 32400/tcp
+    permanent: true
+    state: enabled
+    immediate: true

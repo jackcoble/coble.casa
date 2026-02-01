@@ -1,0 +1,4 @@
+---
+plex_dir: "/opt/plex"
+plex_config_dir: "{{ plex_dir }}/config"
+plex_media_dir: "/mnt/media" # NFS share for Media
