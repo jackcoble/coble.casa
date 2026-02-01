@@ -7,14 +7,6 @@
     group: root
     mode: "0755"
 
-- name: Ensure Immich upload directory exists
-  ansible.builtin.file:
-    path: "{{ immich_upload_location }}"
-    state: directory
-    owner: root
-    group: root
-    mode: "0755"
-
 - name: Ensure Immich DB data directory exists
   ansible.builtin.file:
     path: "{{ immich_db_data_location }}"
