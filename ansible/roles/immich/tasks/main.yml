@@ -23,6 +23,14 @@
     group: root
     mode: "0755"
 
+- name: Mount Immich library NFS share
+  ansible.posix.mount:
+    src: "192.168.0.101:/mnt/tank/photos/Immich"
+    path: "/mnt/photos"
+    fstype: nfs4
+    opts: "defaults,_netdev,x-systemd.automount"
+    state: mounted
+
 - name: Deploy Immich environment file
   ansible.builtin.template:
     src: .env.j2
