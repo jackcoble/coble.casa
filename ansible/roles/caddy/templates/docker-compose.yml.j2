@@ -1,6 +1,6 @@
 services:
   caddy:
-    image: caddy:{{ caddy_version }}
+    image: ghcr.io/caddybuilds/caddy-cloudflare:{{ caddy_version }}
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
@@ -9,3 +9,5 @@ services:
       - {{ caddy_caddyfile_dir }}:/etc/caddy
       - {{ caddy_data_dir }}:/data
       - {{ caddy_config_dir }}:/config
+    environment:
+      - CLOUDFLARE_API_TOKEN={{ caddy_cloudflare_api_token }}

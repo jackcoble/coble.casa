@@ -1,3 +1,9 @@
-:80 {
-	respond "I am 80"
+{
+  # Set the ACME DNS challenge provider to use Cloudflare for all sites
+  acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+}
+
+# Immich
+photos.coble.casa {
+    reverse_proxy http://localhost:2283
 }
