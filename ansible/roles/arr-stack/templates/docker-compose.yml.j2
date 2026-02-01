@@ -42,3 +42,20 @@ services:
         - WEBUI_PORTS=9696/tcp 
       volumes:
         - {{ prowlarr_config_dir }}:/config
+
+    # radarr (movie management)
+    radarr:
+      container_name: radarr
+      image: ghcr.io/hotio/radarr
+      ports:
+        - "7878:7878"
+      environment:
+        - PUID=0
+        - PGID=0
+        - UMASK=002
+        - TZ=Europe/London
+        - WEBUI_PORTS=7878/tcp 
+      volumes:
+        - {{ radarr_config_dir }}:/config
+        - {{ radarr_data_dir }}:/data
+        - {{ radarr_movie_dir }}:/movies

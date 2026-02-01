@@ -10,3 +10,9 @@ rdt_client_data_dir: "{{ rdt_client_dir }}/data"
 # prowlarr vars
 prowlarr_dir: "{{ arr_stack_dir }}/prowlarr"
 prowlarr_config_dir: "{{ prowlarr_dir }}/config"
+
+# radarr vars
+radarr_dir: "{{ arr_stack_dir }}/radarr"
+radarr_config_dir: "{{ radarr_dir }}/config"
+radarr_data_dir: "{{ radarr_dir }}/data"
+radarr_movie_dir: "/mnt/media/Movies"

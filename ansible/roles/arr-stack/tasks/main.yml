@@ -7,6 +7,7 @@
     group: root
     mode: "0755"
 
+# rdt-client
 - name: Ensure base "rdt-client" directory exists
   ansible.builtin.file:
     path: "{{ rdt_client_dir }}"
@@ -23,6 +24,32 @@
     group: root
     mode: "0755"
 
+# Radarr
+- name: Ensure base Radarr directory exists
+  ansible.builtin.file:
+    path: "{{ radarr_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure Radarr config directory exists
+  ansible.builtin.file:
+    path: "{{ radarr_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure Radarr data directory exists
+  ansible.builtin.file:
+    path: "{{ radarr_data_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+# docker deployment
 - name: Deploy docker-compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
