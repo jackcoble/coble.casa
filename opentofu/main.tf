@@ -39,13 +39,13 @@ module "multifreight_dev_vm" {
   memory         = 4 * 1024
 }
 
-# VM for Podman server
-module "podman_vm" {
+# VM for Docker server
+module "docker_vm" {
   source         = "./modules/rocky-vm"
   
   node_name      = "pve"
-  vm_name        = "podman"
-  hostname       = "podman"
+  vm_name        = "docker"
+  hostname       = "docker"
   cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
   ipv4_address   = "dhcp"
   mac_address    = "BC:24:11:38:74:3F"
