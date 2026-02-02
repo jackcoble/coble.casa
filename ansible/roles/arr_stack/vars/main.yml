@@ -1,0 +1,23 @@
+---
+# shared vars
+arr_stack_dir: "/opt/arr-stack"
+arr_stack_download_dir: "/mnt/media/Downloads"
+arr_stack_mullvad_private_key: "{{ secrets.mullvad_wireguard_private_key }}"
+
+# rdt-client vars
+arr_stack_rdt_client_dir: "{{ arr_stack_dir }}/rdt-client"
+arr_stack_rdt_client_data_dir: "{{ arr_stack_rdt_client_dir }}/data"
+
+# prowlarr vars
+arr_stack_prowlarr_dir: "{{ arr_stack_dir }}/prowlarr"
+arr_stack_prowlarr_config_dir: "{{ arr_stack_prowlarr_dir }}/config"
+
+# radarr vars
+arr_stack_radarr_dir: "{{ arr_stack_dir }}/radarr"
+arr_stack_radarr_config_dir: "{{ arr_stack_radarr_dir }}/config"
+arr_stack_radarr_movie_dir: "/mnt/media/Movies"
+
+# sonarr vars
+arr_stack_sonarr_dir: "{{ arr_stack_dir }}/sonarr"
+arr_stack_sonarr_config_dir: "{{ arr_stack_sonarr_dir }}/config"
+arr_stack_sonarr_tv_dir: "/mnt/media/TV"

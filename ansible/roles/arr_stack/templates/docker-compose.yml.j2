@@ -1,4 +1,21 @@
 services:
+    # gluetun (vpn client)
+    gluetun:
+      image: qmcgaw/gluetun
+      cap_add:
+        - NET_ADMIN
+      devices:
+        - /dev/net/tun:/dev/net/tun
+      environment:
+        - VPN_SERVICE_PROVIDER=mullvad
+        - VPN_TYPE=wireguard
+        - WIREGUARD_PRIVATE_KEY={{ arr_stack_mullvad_private_key }}
+        - WIREGUARD_ADDRESSES=10.72.132.243/32
+        - SERVER_CITIES=London
+      ports:
+        - "9696:9696" # prowlarr
+        - "7878:7878" # radarr
+
     # rdt-client (Real-Debrid Torrent Client)
     rdtclient:
       image: rogerfar/rdtclient
@@ -8,7 +25,7 @@ services:
         - PGID=0
         - TZ=Europe/London
       volumes:
-        - {{ rdt_client_data_dir }}:/data/db
+        - {{ arr_stack_rdt_client_data_dir }}:/data/db
         - {{ arr_stack_download_dir }}:/data/downloads
       logging:
         driver: json-file
@@ -32,8 +49,7 @@ services:
     prowlarr:
       container_name: prowlarr
       image: ghcr.io/hotio/prowlarr
-      ports:
-        - "9696:9696"
+      network_mode: "service:gluetun"
       environment:
         - PUID=0
         - PGID=0
@@ -41,14 +57,13 @@ services:
         - TZ=Europe/London
         - WEBUI_PORTS=9696/tcp 
       volumes:
-        - {{ prowlarr_config_dir }}:/config
+        - {{ arr_stack_prowlarr_config_dir }}:/config
 
     # radarr (movie management)
     radarr:
       container_name: radarr
       image: ghcr.io/hotio/radarr
-      ports:
-        - "7878:7878"
+      network_mode: "service:gluetun"
       environment:
         - PUID=0
         - PGID=0
@@ -56,6 +71,6 @@ services:
         - TZ=Europe/London
         - WEBUI_PORTS=7878/tcp 
       volumes:
-        - {{ radarr_config_dir }}:/config
-        - {{ radarr_data_dir }}:/data
-        - {{ radarr_movie_dir }}:/movies
+        - {{ arr_stack_radarr_config_dir }}:/config
+        - {{ arr_stack_radarr_movie_dir }}:/movies
+        - {{ arr_stack_download_dir }}:/data

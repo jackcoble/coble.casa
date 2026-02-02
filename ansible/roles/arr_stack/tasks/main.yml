@@ -10,7 +10,7 @@
 # rdt-client
 - name: Ensure base "rdt-client" directory exists
   ansible.builtin.file:
-    path: "{{ rdt_client_dir }}"
+    path: "{{ arr_stack_rdt_client_dir }}"
     state: directory
     owner: root
     group: root
@@ -18,7 +18,7 @@
 
 - name: Ensure "rdt-client" data directory exists
   ansible.builtin.file:
-    path: "{{ rdt_client_data_dir }}"
+    path: "{{ arr_stack_rdt_client_data_dir }}"
     state: directory
     owner: root
     group: root
@@ -27,7 +27,7 @@
 # Radarr
 - name: Ensure base Radarr directory exists
   ansible.builtin.file:
-    path: "{{ radarr_dir }}"
+    path: "{{ arr_stack_radarr_dir }}"
     state: directory
     owner: root
     group: root
@@ -35,15 +35,7 @@
 
 - name: Ensure Radarr config directory exists
   ansible.builtin.file:
-    path: "{{ radarr_config_dir }}"
-    state: directory
-    owner: root
-    group: root
-    mode: "0755"
-
-- name: Ensure Radarr data directory exists
-  ansible.builtin.file:
-    path: "{{ radarr_data_dir }}"
+    path: "{{ arr_stack_radarr_config_dir }}"
     state: directory
     owner: root
     group: root
