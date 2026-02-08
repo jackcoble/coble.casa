@@ -1,0 +1,45 @@
+---
+- name: Ensure Jellyfin directory exists
+  ansible.builtin.file:
+    path: "{{ jellyfin_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure Jellyfin config directory exists
+  ansible.builtin.file:
+    path: "{{ jellyfin_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Mount Jellyfin media library NFS share
+  ansible.posix.mount:
+    src: "192.168.0.101:/mnt/tank/videos"
+    path: "{{ jellyfin_media_dir }}"
+    fstype: nfs4
+    opts: "defaults,_netdev,x-systemd.automount"
+    state: mounted
+
+- name: Deploy docker-compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ jellyfin_dir }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Ensure Jellyfin container is running
+  community.docker.docker_compose_v2:
+    project_src: "{{ jellyfin_dir }}"
+    state: present
+    pull: always
+
+- name: Allow Jellyfin Media Server port through the firewall
+  ansible.posix.firewalld:
+    port: 8096/tcp
+    permanent: true
+    state: enabled
+    immediate: true
