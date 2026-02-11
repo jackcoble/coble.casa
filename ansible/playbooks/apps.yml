@@ -10,5 +10,4 @@
   roles:
     - caddy
     - immich
-    - arr_stack
     - jellyfin
