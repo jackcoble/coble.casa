@@ -37,6 +37,7 @@ module "multifreight_dev_vm" {
   ssh_pubkey     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqp2MkLIitzT3ZnYU25wYR/GIyYpLtN9D/aH2WU5jtJ"
   cpu_cores      = 2
   memory         = 4 * 1024
+  disk_size      = 64
 }
 
 # VM for Docker server
@@ -52,6 +53,7 @@ module "docker_vm" {
   ssh_pubkey     = var.ssh_pubkey
   cpu_cores      = 4
   memory         = 32 * 1024
+  disk_size      = 64
 }
 
 # Home Assistant Backups
