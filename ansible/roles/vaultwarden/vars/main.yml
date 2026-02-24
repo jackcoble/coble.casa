@@ -1,0 +1,4 @@
+---
+vaultwarden_dir: "/opt/vaultwarden"
+vaultwarden_data_dir: "{{ vaultwarden_dir }}/data"
+vaultwarden_url: "https://vaultwarden.coble.casa"
