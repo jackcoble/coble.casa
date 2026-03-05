@@ -24,6 +24,20 @@ module "tailscale_vm" {
   memory         = 1 * 1024
 }
 
+# USB hardware mapping for Verbatim 4K BD RW Drive
+resource "proxmox_virtual_environment_hardware_mapping_usb" "verbatim_bd_rw" {
+  name    = "verbatim-bd-rw"
+  comment = "Verbatim 4K BD RW Drive"
+
+  map = [
+    {
+      node    = "pve"
+      id      = "18a5:0428"
+      comment = "Verbatim 4K BD RW"
+    },
+  ]
+}
+
 # VM for Docker server
 module "docker_vm" {
   source         = "./modules/rocky-vm"
@@ -38,6 +52,7 @@ module "docker_vm" {
   cpu_cores      = 4
   memory         = 32 * 1024
   disk_size      = 64
+  usb_mappings   = [proxmox_virtual_environment_hardware_mapping_usb.verbatim_bd_rw.name]
 }
 
 # Home Assistant Backups

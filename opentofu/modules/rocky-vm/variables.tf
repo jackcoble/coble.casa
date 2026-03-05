@@ -58,3 +58,9 @@ variable "cloud_image_id" {
   description = "Cloud image file ID to import from"
   type        = string
 }
+
+variable "usb_mappings" {
+  description = "List of Proxmox hardware mapping names for USB passthrough"
+  type        = list(string)
+  default     = []
+}

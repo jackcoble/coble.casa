@@ -67,4 +67,12 @@ resource "proxmox_virtual_environment_vm" "vm" {
     bridge = "vmbr0"
     mac_address = var.mac_address != "" ? var.mac_address : null
   }
+
+  dynamic "usb" {
+    for_each = var.usb_mappings
+    content {
+      mapping = usb.value
+      usb3    = true
+    }
+  }
 }
