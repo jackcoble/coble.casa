@@ -24,22 +24,6 @@ module "tailscale_vm" {
   memory         = 1 * 1024
 }
 
-# VM for MultiFreight Development server
-module "multifreight_dev_vm" {
-  source         = "./modules/rocky-vm"
-  
-  node_name      = "pve"
-  vm_name        = "multifreight-dev"
-  hostname       = "multifreight-dev"
-  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
-  ipv4_address   = "dhcp"
-  mac_address    = "BC:24:11:38:74:3E"
-  ssh_pubkey     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqp2MkLIitzT3ZnYU25wYR/GIyYpLtN9D/aH2WU5jtJ"
-  cpu_cores      = 2
-  memory         = 4 * 1024
-  disk_size      = 64
-}
-
 # VM for Docker server
 module "docker_vm" {
   source         = "./modules/rocky-vm"
