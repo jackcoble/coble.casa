@@ -52,5 +52,6 @@
     --authkey {{ secrets.tailscale_auth_key }}
     --advertise-routes={{ tailscale_subnet_routes }}
     --accept-dns=false
+    --advertise-exit-node
   when: not (tailscale_status.stdout | from_json).Self.Online
   changed_when: false
