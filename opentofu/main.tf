@@ -40,6 +40,23 @@ module "docker_vm" {
   disk_size      = 64
 }
 
+# VM for NAS (ZFS + SMB)
+# Note: add virtual disks for the ZFS pool(s) via Proxmox after provisioning.
+module "nas_vm" {
+  source         = "./modules/rocky-vm"
+
+  node_name      = "pve"
+  vm_name        = "nas"
+  hostname       = "nas"
+  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
+  ipv4_address   = "dhcp"
+  mac_address    = "BC:24:11:38:74:41"
+  ssh_pubkey     = var.ssh_pubkey
+  cpu_cores      = 4
+  memory         = 8 * 1024
+  disk_size      = 32
+}
+
 # Home Assistant Backups
 module "hass_backup" {
   source = "./modules/hass-backup"
@@ -52,4 +69,26 @@ output "hass_backup_access_key_id" {
 output "hass_backup_secret_access_key" {
   value     = module.hass_backup.home_assistant_backup_secret_access_key
   sensitive = true
+}
+
+# NAS Rustic Backups (hot metadata bucket + cold Glacier Deep Archive data bucket)
+module "nas_backup" {
+  source = "./modules/nas-backup"
+}
+
+output "nas_backup_rustic_access_key_id" {
+  value = module.nas_backup.rustic_access_key_id
+}
+
+output "nas_backup_rustic_secret_access_key" {
+  value     = module.nas_backup.rustic_secret_access_key
+  sensitive = true
+}
+
+output "nas_backup_hot_bucket" {
+  value = module.nas_backup.hot_bucket_name
+}
+
+output "nas_backup_cold_bucket" {
+  value = module.nas_backup.cold_bucket_name
 }
