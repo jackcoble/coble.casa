@@ -13,22 +13,22 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "6.28.0"
+      version = "6.64.0"
     }
 
     sops = {
       source = "nobbs/sops"
-      version = "0.3.1"
+      version = "0.3.3"
     }
 
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.88.0"
+      version = "0.113.1"
     }
 
     tailscale = {
       source  = "tailscale/tailscale"
-      version = "0.24.0"
+      version = "0.29.2"
     }
   }
 }
