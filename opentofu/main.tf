@@ -1,11 +1,11 @@
 # Rocky Linux 10 Cloud Image Download
-resource "proxmox_virtual_environment_download_file" "rocky_linux_10_cloud_image" {
+resource "proxmox_download_file" "rocky_linux_10_cloud_image" {
   content_type       = "import"
   datastore_id       = "local"
   file_name          = "rocky-linux-10-cloudimg-amd64.qcow2"
   node_name          = "pve"
   url                = "https://dl.rockylinux.org/pub/rocky/10/images/x86_64/Rocky-10-GenericCloud-Base.latest.x86_64.qcow2"
-  checksum           = "28628abf08a134c6f9e1eccbcac3f2898715919a6da294ae2c6cd66d6bc347ad"
+  checksum           = "9fc9e9ff16888bb68ac39b0392e25c9c92684d50c85f1cce6ab549363bbc4b48"
   checksum_algorithm = "sha256"
 }
 
@@ -16,7 +16,7 @@ module "tailscale_vm" {
   node_name      = "pve"
   vm_name        = "dns"
   hostname       = "dns"
-  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
+  cloud_image_id = proxmox_download_file.rocky_linux_10_cloud_image.id
   ipv4_address   = "dhcp"
   mac_address    = "BC:24:11:38:74:3D"
   ssh_pubkey     = var.ssh_pubkey
@@ -31,7 +31,7 @@ module "docker_vm" {
   node_name      = "pve"
   vm_name        = "docker"
   hostname       = "docker"
-  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
+  cloud_image_id = proxmox_download_file.rocky_linux_10_cloud_image.id
   ipv4_address   = "dhcp"
   mac_address    = "BC:24:11:38:74:3F"
   ssh_pubkey     = var.ssh_pubkey
@@ -48,7 +48,7 @@ module "nas_vm" {
   node_name      = "pve"
   vm_name        = "nas"
   hostname       = "nas"
-  cloud_image_id = proxmox_virtual_environment_download_file.rocky_linux_10_cloud_image.id
+  cloud_image_id = proxmox_download_file.rocky_linux_10_cloud_image.id
   ipv4_address   = "dhcp"
   mac_address    = "BC:24:11:38:74:41"
   ssh_pubkey     = var.ssh_pubkey
