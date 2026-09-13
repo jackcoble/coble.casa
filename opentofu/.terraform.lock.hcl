@@ -5,7 +5,20 @@ provider "registry.opentofu.org/bpg/proxmox" {
   version     = "0.88.0"
   constraints = "0.88.0"
   hashes = [
+    "h1:/6TMqwIfslKGvlaP+i8clyAkGReStS558CUV4wBigPQ=",
+    "h1:4SMX3ZTDhC34zH2MMduoS+7D2fHV0HPGVUHx4acCdTE=",
+    "h1:4SkIf4WhhHjKhDnaKoM+2tk37OSNkMX8gTd7OFYqRg0=",
+    "h1:8nA8HtlSWSKWWq0vfhwbtm7HEIhxy/m0YmwCsbvP3Js=",
     "h1:C6z/uZoHy0pZwRhf/0U+9Otsxs8KXuuWvoGASB7HzYw=",
+    "h1:FCJjusBE8n3+09Q9lFXkNuKJ3FZVuiLAtNvUbn5hx/A=",
+    "h1:Sh8vTcMhDrekiAU5oYtBBHp4xCQfzcsiEPKeCMvSI54=",
+    "h1:T5F3b38l6kNlJZ2Bdt6yldyXb06avXwXG1Ez70P65Ro=",
+    "h1:j847XX8d3JpzU9spjyn5IyfdDsYMh+kxgcRZ96xHAmc=",
+    "h1:nB3qIMdvnOU8F/kA8SLMDDZqViSVjApoQhdZEf1aiUY=",
+    "h1:vMxmJ1gogqGg7/4ogY4ADRzMiOH7EeIYAvN25yC9BoY=",
+    "h1:xhlNAzWB+4f8xdfaYNtVeGO+pk3MqaPP0E2VAZyLSss=",
+    "h1:xsLNhVQwMqJcNL9JAdHx0NAgWmhT0GFwgBoLbL70QK4=",
+    "h1:ydmPqZVUShxUuVd8er0lvDJLzu+vtCv5G1zHq4gLu2w=",
     "zh:022749d9e02050da10e3a10729fddbff26a1eaaf4331261ef43dcd4a67420145",
     "zh:126f26ddadb783c65a68df24ac576c3165db88797ced42e623e3e809cb82bc28",
     "zh:186cd8053de91a1196d8c71b09b0de4e81bc69610980ccfc688d8807bbd52e15",
@@ -28,6 +41,14 @@ provider "registry.opentofu.org/hashicorp/aws" {
   version     = "6.28.0"
   constraints = "6.28.0"
   hashes = [
+    "h1:HRIef5R96dZbCL7AtPbGsdJnr6bGjB0P3TnI+N/lEuU=",
+    "h1:JW/6X82H742ltNqdi1Z+o3Y+diA6fluOH805IOI7kqg=",
+    "h1:a04viexyZH7XCg13UIibwzkFMfQvMWA//8f9okDFKIs=",
+    "h1:gls3u4DZH97fapaPejImJ0ITIZo9epFFVhhJZUSuDbs=",
+    "h1:i0G7vt2sNy0oz84IiuG4gplonNVyOLRdprKLurU8pe4=",
+    "h1:k967tIoJHNgEt72UJDzlE6ngWN91Ke96zrpgnn2PvUA=",
+    "h1:kjmhRbLdowE0T9x6hGzO5fCM01Qz+8GntpsaXqe9HiE=",
+    "h1:tcau98fkhZ2RhbPHo8LdiiUk2RGpZUgT/t06sdMLids=",
     "h1:wek8vEEZpTPulbLi9xCf2wnxvc97JXAN4qcOhduSg7k=",
     "zh:38d58305206953783c150fb96d5c4f3ea5fe0b9e0987d927c884a6b0f2adf7a9",
     "zh:43fd483251165f98b7a44360b41b437d309b007ef2bfff818eedcf3730e3f5cb",
@@ -45,7 +66,20 @@ provider "registry.opentofu.org/nobbs/sops" {
   version     = "0.3.1"
   constraints = "0.3.1"
   hashes = [
+    "h1:1/Y+fDqU8qmU5mTMUwH1Z527uNHi1/vHRSOGipFeAc8=",
+    "h1:57qij2XE2YcPfrJaKsqtB4LQv1Ij7PBPvUnt9qOdZvg=",
+    "h1:6n94TheJQMrlZhMQ3c6NBmmJctFfoi9Emkv2/7Ut8Hg=",
+    "h1:7q5MqQfYXlWc982RyLh3dYXOMkcT5x4C7Z9bzrVy8F0=",
+    "h1:M3JF96iA6xvfgN6NixqvjbhSc4crHEc0RN5WTb11wJ0=",
+    "h1:S2tiyF6P+oXfSIQiIzVwzpHox0eyDOt5WZDuXfS7Kyo=",
+    "h1:SR8zK9mSsEqW1GAA8mNyx9Nc71p1n9cjEIren0RPSx8=",
+    "h1:TpTkvJvTs+cGoliDdqhFuDtIA+Bu97KGoid+a5SKoiw=",
+    "h1:a2iU8vVpePzY4LfiS7OsgY+MmVwop44ozGjy/FZbZ/g=",
+    "h1:bDJdseeWTMiefu3KfJjQCALlNrhoziGndUbm8l0EwfQ=",
+    "h1:bFGwb4fqvyKFEKhF5rAaAjcb8mqX6mI0bXPGa5YLGLc=",
     "h1:ezi2lTiqJ8k33HkGfp2DCH/29rOjGHQPTjUBkUoRCNo=",
+    "h1:l3YOBRuoJ+skStDsLD1iCU/qzb3HxAOdeqHmdD+zrJM=",
+    "h1:mNVGBfB8tqHL8tJBvVy3giTPFxuasjXihtlq4/x8aFo=",
     "zh:07abc28b63fae5621a57ee247a326b00466232bc1f08135dd9dadab6be659b3b",
     "zh:0b4c8c298dcae1e75632856045b6435a502c79e820ae6e11ee302ab274257a9e",
     "zh:116162ecb8e98feeecac920e68dcde865d7f2eaa5166c2016325a470c8ffe293",
@@ -68,7 +102,20 @@ provider "registry.opentofu.org/tailscale/tailscale" {
   version     = "0.24.0"
   constraints = "0.24.0"
   hashes = [
+    "h1:0Mc4UH/UiyBPn9x4sLMmRiEE5OzBw3ZsSRAghBtIGzE=",
+    "h1:4Zf13pAsOiuDu/42xUBI3Gy9jtFT/CwKvSX7rQMnXLY=",
+    "h1:9hIA6jgxnprucaiMGbcBI+F+nrwb5tnEKWpihO9wXtc=",
+    "h1:AUFk3Un6hvfva/xHEIQdn1EQdKeTtaEXi4tDmLlViPY=",
+    "h1:BeUMnLs5CtBqL5ZMV60vZT8N2AgfsoI+d9UDhlmWutQ=",
     "h1:F7Jj03acdrWPNit/gV744xsE49CWvfrKssENgeEBlVI=",
+    "h1:LEY3jsqAnBBFVOr/yodkk2Cg5LN8BnmFznezl+EtP7U=",
+    "h1:WqtuH8PV49fEluo4DJQjiCrJ7tRwj1mJbZlWev+1VjQ=",
+    "h1:dCHQProPXz/3I7+NlfGN9VhNQB4g5WPYyi8e0Ey9K6k=",
+    "h1:fJRvL1h+LQ4bOgGpPVZo3cr9rkFV7MQlIrJaiNirBow=",
+    "h1:oaZeuETwFDCKLQ6cLX+RuIYuO+86KSrl/cpbimiZjSQ=",
+    "h1:pW2kBdMZv53yYPwh32q+uPhh1ZA9Lbf/fIUQv3FG/24=",
+    "h1:sFSvh/I9NwXxmyawNlN6ZKHAlVNDzaB5HZWojZgOYwc=",
+    "h1:tBRdZgM0jnwrb1EKG0WGMqQ6jii15Wc2syg2y2rmmec=",
     "zh:02c232ff3945dc5288fd7e3c9ddcdd5f0aa884b491651271d4fcc083c6293810",
     "zh:0de7eb1c45aa50512bf89254c451f442ab17f9f3b9f6a469ad4b3ff105480b1c",
     "zh:24ccca014bec2dfb38e2a8d712a5f1d293417ee002f6ddd78a89aee0e6b0a992",

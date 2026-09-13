@@ -70,25 +70,3 @@ output "hass_backup_secret_access_key" {
   value     = module.hass_backup.home_assistant_backup_secret_access_key
   sensitive = true
 }
-
-# NAS Rustic Backups (hot metadata bucket + cold Glacier Deep Archive data bucket)
-module "nas_backup" {
-  source = "./modules/nas-backup"
-}
-
-output "nas_backup_rustic_access_key_id" {
-  value = module.nas_backup.rustic_access_key_id
-}
-
-output "nas_backup_rustic_secret_access_key" {
-  value     = module.nas_backup.rustic_secret_access_key
-  sensitive = true
-}
-
-output "nas_backup_hot_bucket" {
-  value = module.nas_backup.hot_bucket_name
-}
-
-output "nas_backup_cold_bucket" {
-  value = module.nas_backup.cold_bucket_name
-}
